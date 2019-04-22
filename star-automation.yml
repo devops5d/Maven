@@ -1,0 +1,18 @@
+stages:
+   - Building & migration
+
+build:
+  stage: Building & migration
+  commands:
+     - ls
+     - jar -cvf helloworld.war *.jsp WEB-INF
+     - mv -f helloworld.war dist/
+
+pre-build:
+  script:
+    - ls
+
+post-build:
+  script:
+    - ls -la
+
