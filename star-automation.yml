@@ -7,7 +7,6 @@ build:
      - ls
      - jar -cvf helloworld.war *.jsp WEB-INF
      - mv -f helloworld.war target/
-     - rm -rf target/text
 
 pre-build:
   script:
