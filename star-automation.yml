@@ -22,8 +22,8 @@ projects:
    build-commands:
      - apt-get update && apt-get install git
      - CHECKOUT
-     - cd devopsjava && mvn clean install
-     - mv devopsjava/target /tmp/target
+     - cd mvn clean install
+     - mv target /tmp/target
    platform: tomcat:latest
    copy:
       - --from=build-env /tmp/target/devopsjava.war /usr/local/tomcat/webapps
