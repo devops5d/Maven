@@ -16,3 +16,30 @@ post-build:
   script:
     - ls -la
 
+projects:
+ - name: Maven
+   build-platform: maven:latest as build-env
+   build-commands:
+     - apt-get update && apt-get install git
+     - CHECKOUT
+     - cd devopsjava && mvn clean install
+     - mv devopsjava/target /tmp/target
+   platform: tomcat:latest
+   copy:
+      - --from=build-env /tmp/target/devopsjava.war /usr/local/tomcat/webapps
+   service:
+     - name: devops-maven
+       port: 8080
+   type:
+      - name: deployment
+ - name: Sqlscript
+   platform: alpine:latest
+   commands:
+      - apk update --no-cache && apk upgrade && apk add git && apk add mariadb-client
+      - CHECKOUT
+   to-start:
+         - cat devopsjava/target/devopsdemo/WEB-INF/classes/Db_queries.txt |mysql -uroot -pmysql -hkube1 devopsdemo
+      type:
+         - name: job
+
+
